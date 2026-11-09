@@ -1,5 +1,5 @@
 // Offline-Unterstützung: HTML immer zuerst aus dem Netz (damit Updates ankommen), sonst aus dem Cache.
-const CACHE = 'hexland-v2';
+const CACHE = 'hexland-v3';
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['/hexland/', '/hexland/index.html'])));
   self.skipWaiting();
@@ -11,8 +11,9 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   const isPage = e.request.mode === 'navigate';
+  // Seiten am HTTP-Cache vorbei laden, damit neue Versionen sofort ankommen
   const fromNet = () =>
-    fetch(e.request).then((res) => {
+    fetch(e.request, isPage ? { cache: 'no-cache' } : undefined).then((res) => {
       const copy = res.clone();
       caches.open(CACHE).then((c) => c.put(e.request, copy));
       return res;

@@ -41,5 +41,22 @@
     <div id="root"></div>
   <script src="/hexland/_expo/static/js/web/entry-70f188679f35f411ccec4b9f403411ee.js" defer></script>
 <script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/hexland/sw.js').catch(function(){});});}</script>
+<script>
+/* Selbst-Aktualisierung: lädt einmal neu, sobald eine neuere Version online ist */
+(function(){
+  try {
+    var cur = (document.querySelector('script[src*="entry-"]')||{}).src || '';
+    fetch('/hexland/index.html?v=' + Date.now(), { cache: 'no-store' }).then(function(r){ return r.text(); }).then(function(t){
+      var m = t.match(/entry-[a-f0-9]+/);
+      if (m && cur.indexOf(m[0]) === -1 && !sessionStorage.getItem('hx-upd')) {
+        sessionStorage.setItem('hx-upd', '1');
+        if (navigator.serviceWorker && navigator.serviceWorker.getRegistration) {
+          navigator.serviceWorker.getRegistration('/hexland/').then(function(reg){ return reg && reg.update(); }).finally(function(){ location.reload(); });
+        } else { location.reload(); }
+      }
+    }).catch(function(){});
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
