@@ -1,0 +1,15 @@
+{
+  "name": "Hexland · Spielfeld-Generator",
+  "short_name": "Hexland",
+  "lang": "de",
+  "start_url": "/hexland/",
+  "scope": "/hexland/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F6F4F0",
+  "theme_color": "#F6F4F0",
+  "icons": [
+    { "src": "/hexland/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/hexland/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
