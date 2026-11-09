@@ -1,5 +1,5 @@
 // Offline-Unterstützung: HTML immer zuerst aus dem Netz (damit Updates ankommen), sonst aus dem Cache.
-const CACHE = 'hexland-v5';
+const CACHE = 'hexland-v6';
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['/hexland/', '/hexland/index.html'])));
   self.skipWaiting();
